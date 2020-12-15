@@ -1,15 +1,18 @@
 from math import *
 
 def calculrayoncourbure(cible):
-    "calcule le rayon de courbure necessaire à rejoidre cible depuis zero en ne prenant comme direction de v la direction dans laquelle pointe le véhicule"
-    
+    """
+Calcule et renvoie le rayon de courbure necessaire pour rejoidre la cible 'cible' depuis zéro en ne prenant comme direction de v la direction dans laquelle pointe le véhicule
+cible = [xc,yc]
+    """
     xc=cible[0]
     yc=cible[1]
+
+# On va utiliser l'équation de droite (0,cible)
     if yc!=0:
-        K=xc/yc #la pente de la droite ortho à O cible"
+        K=xc/yc         # Pente de la droite (O,cible)
         C=yc/2-K*xc/2
-    
-        yo=K*0+C #intersection entre la droite portée par le rayon issu de O et la mediatrice de OCible se coupent en O et la droite portée par le rayon issu de O est d'équation x=0"
+        yo=C
     if yc==0:
         yo=100
     R=yo

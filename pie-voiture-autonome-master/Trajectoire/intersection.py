@@ -1,9 +1,13 @@
 from math import *
 
-def intersection(p,segment):
-    "retourne 1 si la droite OP coupe le segment segment"
-    xp=p[0]
-    yp=p[1]
+def intersection(P,segment):
+    """
+Retourne 1 si la droite OP coupe le segment 'segment'.
+P = [xp, yp]
+segment = [x1,y1,x2,y2]
+    """
+    xp=P[0]
+    yp=P[1]
     x1=segment[0]
     y1=segment[1]
     x2=segment[2]
@@ -11,6 +15,7 @@ def intersection(p,segment):
     
     Kp=yp/xp
     res=0
+    # équation de droite pour trouver l'intersection
     if x2!=x1:
         K=(y2-y1)/(x2-x1)
         C=y1-K*x1
@@ -27,9 +32,5 @@ def intersection(p,segment):
             yinter=Kp*xinter
             if (x1-xinter)*(x2-xinter)+(y1-yinter)*(y2-yinter)<0:
                 res=1
-    
-    
         
     return(res)
-    
-    
