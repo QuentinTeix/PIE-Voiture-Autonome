@@ -1,14 +1,17 @@
-
-
-
+"""
+Ce code permet d'afficher une petite animation d'un cube sur un cadrillage qui tourne en avançant (5 images seulement)
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib import animation
 
-x = [0, 1, 2]
-y = [0, 1, 2]
-yaw = [0, 0.5, 1.3]
+# Le nombre d'arguments donne le nombre d'images
+x = [0, 1, 2, 3, 4]
+y = [0, 1, 2, 3, 4]
+yaw = [0, 0.5, 1.3, 2.1, 2.9]
+
+# Initialisation de la figure
 fig = plt.figure()
 plt.axis('equal')
 plt.grid()
@@ -32,6 +35,6 @@ def animate(i):
 anim = animation.FuncAnimation(fig, animate,
                                init_func=init,
                                frames=len(x),
-                               interval=500,
+                               interval=500,            #interval de temps entre les images de l'animation
                                blit=True)
 plt.show()
