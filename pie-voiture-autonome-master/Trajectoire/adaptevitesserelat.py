@@ -1,41 +1,58 @@
 from math import *
 import copy
 
+"""
+ancienne notations:
+M = coord_lidar
+MMMR = environment
+N = len_coord_lidar
+NNN = len_env
+"""
 
-def adaptevitesserelat (Mm1,M,MMMR,alpha,v,deltat,rmax,orientation,orientationm1):
+
+def adaptevitesserelat (coord_lidar_prec,coord_lidar,environment,alpha,v,deltat,rmax,orientation,orientationm1):
+    """
+    Cette fonction déplace la zone de sécurité près du bord en fonction de la vitesse du véhicule par rapport au bord.
+
+    coord_lidar_prec = [(thetai,ri)] -> liste des tuples de coordonnées du lidar au temps t-dt
+    coord_lidar = [(thetai,ri)] liste des tuples de coordonnées lidar
+    environment = [(thetai,ri,xi,yi,xpi,ypi)] (voir zonesafe.py)
+    environment_pi_cone = [(thetai,ri,xi,yi,xpi,ypi)] ou pi est tq le vecteur pipti est orthogonal au bord du circuit et de norme rv+m des pi entre -alpha et alpha
+    deltat -> intervalle de temps entre deux mesures lidar (paramètres)
+
+    environment_corr = [(thetai,ri,xi,yi,xpi,ypi,xpprimi,ypprimi)] environement corrigé
+        où pprim est le point pi repositionné en foncion de sa vitesse relative (vrai que pour les pi dans le cone alpla -alpha les autres sont inchangés)
+    environment_corr_2 = [(thetai,ri,xi,yi,xpi ou xpprimi,ypi ou ypprimi)] -> environment corrigé final (INCOMPREHENSIBLE)
+    """
+    environment_pi_cone=[]
+    environment_corr=[]
+    environment_corr_2 = copy.deepcopy(environment)
+    len_env = len(environment)
+    i=0
+    len_coord_lidar = len(coord_lidar)
     
-    "Mm1=[(thetai,ri)] liste des tuples de coordonnées lidar au temps t-dt"
-    "M=[(thetai,ri)] liste des tuples de coordonnées lidar"
-    "MMR=[(thetai,ri,xi,yi)]"
-    "MMMR=[(thetai,ri,xi,yi,xpi,ypi)] ou pi est tq le vecteur pipti est orthogonal au bord du circuit et de norme rv+m"
-    "mmmr=[(thetai,ri,xi,yi,xpi,ypi)] ou pi est tq le vecteur pipti est orthogonal au bord du circuit et de norme rv+m des pi entre -alpha et alpha"
-    "deltat=intervalle de temps entre deux mesures lidar"
-    "mmmrc=[(thetai,ri,xi,yi,xpi,ypi,xpprimi,ypprimi)] ou pprim est le point pi repositionné en foncion de sa vitesse relative (vrai que pour les pi dans le cone alpla -alpha les autres sont inchangés)"
-    "MMMRC=[(thetai,ri,xi,yi,xpi ou xpprimi,ypi ou ypprimi)]"
-    mmmr=[]
-    mmmrc=[]
-    MMMRC=copy.deepcopy(MMMR)
-    NNN=len(MMMR)
-    i=0
-    N=len(M)
-    while i<NNN:
-        if (MMMR[i][0]*360/N)<alpha:
-            mmmr.append(MMMR[i])
+    # on ne garde les coordonnées que quand on est dans un cone
+    while i<len_env:
+        if (environment[i][0]*360/len_coord_lidar)<alpha: 
+            environment_pi_cone.append(environment[i])
         i+=1
     i=0
-    while i<NNN:
-        if (MMMR[i][0]*360/N)>(360-alpha):
-            mmmr.append(MMMR[i])
+    while i<len_env:            #crétaion du environment_pi_cone
+        if (environment[i][0]*360/len_coord_lidar)>(360-alpha):
+            environment_pi_cone.append(environment[i])
         i+=1
     i=0
-    nnn=len(mmmr)
+    nnn=len(environment_pi_cone)
     while i<nnn:
-        theta=mmmr[i][0]
-        theta=int(theta)
-        vrel=(M[theta][1]-Mm1[(theta+int((orientation-orientationm1)/360*N))%N][1])/deltat #approx de la dérivée de la distance à l'objet par rapport au temps"   ATTENTION REMPLACER (orientation-orientationm1) par les données de l'accéléromètre dorientation/dt*deltat
-        
-        thetap=atan(mmmr[i][5]/mmmr[i][4]) #angle de coordonnées polaires du pt p attention c'est bien en angle cette fois"
-        rp=sqrt(mmmr[i][5]**2+mmmr[i][4]**2) #rayon de coordonnées polaires du pt p"
+        theta = int(environment_pi_cone[i][0])
+        # 'coord_lidar' louche ensuite, plutôt 'environment' ??
+        vrel = (coord_lidar[theta][1]-coord_lidar_prec[(theta + int((orientation-orientationm1)/360*len_coord_lidar))%len_coord_lidar][1])/deltat
+        # approximation de la dérivée de la distance à l'objet par rapport au temps"
+        # ATTENTION REMPLACER (orientation-orientationm1) par les données de l'accéléromètre dorientation/dt*deltat
+        # orientation et orientationm1 vallent 0 pour le moment
+
+        thetap = atan(environment_pi_cone[i][5]/environment_pi_cone[i][4]) # angle de coordonnées polaires du point p, attention c'est bien en angle cette fois
+        rp = sqrt(environment_pi_cone[i][5]**2+environment_pi_cone[i][4]**2) # rayon de coordonnées polaires du point p
         if vrel<0:
             rpprim=min(rp*v*cos(thetap)/(-vrel),rmax) #adaptation du rayon en fonction de la vitesse relative à la voituredu point qu'il désigne"
             #on pourrait modifier le ryon en prenant aussi compte de l'accélération relative!
@@ -44,36 +61,19 @@ def adaptevitesserelat (Mm1,M,MMMR,alpha,v,deltat,rmax,orientation,orientationm1
         xpprim=rpprim*cos(thetap)
         ypprim=rpprim*sin(thetap)
             
-        
-            
-        mmmrc.append((mmmr[i]+[xpprim,ypprim]))
+        environment_corr.append((environment_pi_cone[i]+[xpprim,ypprim]))
         i+=1
     i=0
     
-    while i<len(mmmrc):
+
+    # Bon courage pour comprendre cette partie
+    while i<len(environment_corr_2):
         j=0
-        while j<NNN:
-            if mmmrc[i][0]==MMMRC[j][0]:
-                MMMRC[j][4]=mmmrc[i][6]
-                MMMRC[j][5]=mmmrc[i][7]
+        while j<len_env:
+            if environment_corr[i][0]==environment_corr_2[j][0]:
+                environment_corr_2[j][4]=environment_corr[i][6]
+                environment_corr_2[j][5]=environment_corr[i][7]
             j+=1
         i+=1
     
-    return(MMMRC)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-        
+    return(environment_corr_2)        
