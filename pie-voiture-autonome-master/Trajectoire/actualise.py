@@ -5,6 +5,7 @@ def actualise(R,v,position,obj,orientation,deltat,amaxlat,epsilonmax,amax,amin,t
     """
     Cette fonction met à jour la position, l'orientation et la vitesse du mobile.
 
+
     Arguments de la fonction :
     R -> Rayon actuel de courbure
     v -> vitesse du mobile
