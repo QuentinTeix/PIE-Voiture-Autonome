@@ -20,6 +20,7 @@ yaw = [0.0, 45, 45]
 i=0
 alpha=(45+180)*2*pi/360
 
+#centre les positions initiales
 while i<len(x):
     x[i]=x[i]+sqrt(2)/2*(cos(yaw[i]*2*pi/360+alpha))
     y[i]=y[i]+sqrt(2)/2*(sin(yaw[i]*2*pi/360+alpha))
