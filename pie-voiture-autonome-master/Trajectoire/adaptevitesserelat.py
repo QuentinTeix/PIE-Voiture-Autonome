@@ -13,6 +13,10 @@ NNN = len_env
 def adaptevitesserelat (coord_lidar_prec,coord_lidar,environment,alpha,v,deltat,rmax,orientation,orientationm1):
     """
     Cette fonction déplace la zone de sécurité près du bord en fonction de la vitesse du véhicule par rapport au bord.
+    
+    IMPORTANT 
+        corrige cone entre -alpha et alpha 
+        reste inchangé sinon 
 
     coord_lidar_prec = [(thetai,ri)] -> liste des tuples de coordonnées du lidar au temps t-dt
     coord_lidar = [(thetai,ri)] liste des tuples de coordonnées lidar
