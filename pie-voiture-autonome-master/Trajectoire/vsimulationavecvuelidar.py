@@ -1,5 +1,4 @@
 #simulation de trajectoire:
-
 import matplotlib.pyplot as plt
 import numpy as np
 import copy
@@ -15,11 +14,18 @@ from calculrayoncourbure import *
 from math import *
 from objectif import *
 
-#initialisation
+"""
+Ce module a pour objectif de simuler l'avancement de la voiture dans un environement 
+MARCHE PAS BIEN 
 
+"""
+
+#creation environement et variables
 envir=environment()
 [positioninit,orientationinit,vinit,deltat,amaxlat,epsilonmax,amax,amin,tsb,l,larg,vmax,N,rv,m,alpha,lanti]=params()
+#angle incrementation lidar
 alphainc=360/N
+#initialisation grandeur 
 position=[4,-1]
 orientation=0
 v=vinit
@@ -27,19 +33,24 @@ positionm1=[11.3,-8]
 orientationm1=0
 vm1=vinit
 
+#mesure du lidar 
 Mm1=lidar(envir,positionm1,orientationm1,N)
 M=lidar(envir,position,orientation,N)
 
+#calcul zone safe 
 MMMR=zonesafe(M,rv,m)
-
+#calcul zone safe avec vitesse adaptée 
 MMMRC=adaptevitesserelat (Mm1,M,MMMR,alpha,v,deltat,lanti,orientation,orientationm1)
+
+#recherche de la cible a viser pour se diriger
 cible=trouvecible(MMMRC)
+#on en deduit objectif (j'ai pas bien compris l'interet de ce delta)
 obj=objectif(cible,v,deltat)
+#on en deduit rayon de courbure
 R=calculrayoncourbure(obj)
 
 
-#afficher le circuit
-
+#on affiche le circuit
 envir=environment()
 n=len(envir)
 i=0
@@ -55,44 +66,59 @@ i=0
 
 plt.plot(position[0],position[1],"k:o")
 
-P=1 #nombre de pts de la traj à tracer
+
+#ANIMATION 
+P=10 #nombre de pts de la traj à tracer
 j=0
-while j<P:
-    
-    #Tracé de ce que voit le lidar
-    
+
+while j<P:        
     x=position[0]
     y=position[1]
     i=0
     while i<len(MMMR):
-        xl=MMMR[i][2] #abscisse du pt lidar dans le ref du lidar 
+        #On trace ce que voit le lidar pour chaque point mesuré 
+
+        #abscisse du point BORDURE mesuré dans ref lidar 
+        xl=MMMR[i][2] 
         yl=MMMR[i][3]
-        theta=MMMR[i][0] #nb inc angle de coord polaires dans le ref du lidar
+
+        #calcul angle du point mesuré a partir increment 
+        theta=MMMR[i][0]  
         thetac=(theta*alphainc+orientation)*2*pi/360  #angle de coord polaires dans le ref absolu
+        
+        #distance du point BORDURE au lidar 
         r=MMMR[i][1]
+
+        #coordonné du point BORDURE dans le referentiel absolu 
         xlc=r*cos(thetac)+x #rcos(thetac) =abscisse dans le ref du lidar rotationné de orientation xlc=abscisse dans le ref absolu
         ylc=r*sin(thetac)+y
 
-        xlp=MMMR[i][4] #abscisse du pt lidar dans le ref du lidar 
+        #coordonné du point dans le referentiel lidar ZONE SAFE
+        xlp=MMMR[i][4] 
         ylp=MMMR[i][5]
+
+        #calcul angle du point mesuré ZONE SAFE  
         thetap=atan((ylp)/(xlp))
         if xlp<0:
             thetap=pi+atan(ylp/xlp)
         thetacp=thetap+orientation*2*pi/360
+
+        #calcul distance entre lidar et poit zone safe ref absolu 
         rp=sqrt(xlp**2+ylp**2)
         xlpc=rp*cos(thetacp)+x
         ylpc=rp*sin(thetacp)+y
 
-
+        #y a plus qu'a afficher !
         plt.plot(xlc, ylc,"b:o")
         plt.plot(xlpc,ylpc,"r:o")
         i+=1
     
-    #mise à jour des variables 
+    #mise à jour des variables on sauvegarde position precedente
     positionm1=copy.deepcopy(position)
     orientationm1=copy.deepcopy(orientation)
     vm1=copy.deepcopy(v)
     
+    #calcul des nouvelles positions / zones / grandeurs
     [position,orientation,v]=actualise2(R,v,position,obj,cible,orientation,deltat,amaxlat,epsilonmax,amax,amin,tsb,l,vmax,N)
     Mm1=lidar(envir,positionm1,orientationm1,N)
     M=lidar(envir,position,orientation,N)
@@ -113,18 +139,7 @@ while j<P:
     xciblec=rcible*cos(thetaciblec)+position[0]
     yciblec=rcible*sin(thetaciblec)+position[1]
 
-    
-    
-    
-    #debugage
-   
-    #print(j)
-    #print('vitesse',v)
-    #print('orientation', orientation)
-    #print('R',R)
-     
-     
-     
+    #on affiche la voiture et le trait de tir 
     plt.plot(position[0],position[1],"k:o")
     plt.plot([position[0],xciblec],[position[1],yciblec],"k:+")
     plt.plot(xciblec,yciblec,"g:o")
