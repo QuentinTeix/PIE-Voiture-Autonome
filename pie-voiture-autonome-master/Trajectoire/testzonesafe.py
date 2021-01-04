@@ -6,7 +6,7 @@ from zonesafe import *
 
 """
 Ce module permet de tester le bon fonctionement de la zone safe avant de tester le bon fonctionement de trouvecible
-MMMR=[(thetai,ri,xi,yi,xpi,ypi)]
+environment=[(thetai,ri,xi,yi,xpi,ypi)]
 
 """
 #Nombre d'angle de mesure du lidar
@@ -27,15 +27,15 @@ while i<N:
 
    
 #calcul zone safe 
-MMMR=zonesafe(lidar,rv,m)
+environment=zonesafe(lidar,rv,m)
 
 #on trace 
 i=0
-while i<len(MMMR):
+while i<len(environment):
     #bord circuit
-    plt.plot(MMMR[i][2], MMMR[i][3],"b:o")
+    plt.plot(environment[i][2], environment[i][3],"b:o")
     #bord zone safe 
-    plt.plot(MMMR[i][4], MMMR[i][5],"r:o")
+    plt.plot(environment[i][4], environment[i][5],"r:o")
     i=i+1
     
 plt.axis('equal')

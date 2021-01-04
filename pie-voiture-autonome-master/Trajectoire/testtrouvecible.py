@@ -13,6 +13,10 @@ Il trace :
     - la zone safe facile en rouge 
     - la zone safe adapte entre les angle -alpha et alpha en vert
     - la cible trouvée
+
+
+environment --> MMMR [(thetai,ri,xi,yi,xpi,ypi)]
+environment_adapte --> MMMRC  [(thetai,ri,xi,yi,xpi xpiprim,ypiprim)]
 """
 
 #on sait pas a quoi ca sert
@@ -50,21 +54,21 @@ while i<N:
     i+=1
     
 #on calcul zone safe 
-MMMR=zonesafe(lidar2,rv,m)
+environment=zonesafe(lidar2,rv,m)
 #on calcul zone safe avec dapatation vitesse
-MMMRC=adaptevitesserelat (lidar1,lidar2,MMMR,alpha,v,deltat,rmax,orientation,orientationm1)
+environment_adapte=adaptevitesserelat (lidar1,lidar2,environment,alpha,v,deltat,rmax,orientation,orientationm1)
 #on cherche la cible
-cible=trouvecible(MMMRC)
+cible=trouvecible(environment_adapte)
 
 #on trace tout ca 
 i=0
-while i<len(MMMR):
+while i<len(environment):
 	#en bleu le bord du circuit
-    plt.plot(MMMR[i][2], MMMR[i][3],"b:o")
+    plt.plot(environment[i][2], environment[i][3],"b:o")
     #en rouge la zone safe non adapté a vitesse
-    plt.plot(MMMR[i][4], MMMR[i][5],"r:o")
+    plt.plot(environment[i][4], environment[i][5],"r:o")
     #en vert la zone safe adapté selon la vitesse 
-    plt.plot(MMMRC[i][4], MMMRC[i][5],"g:o")
+    plt.plot(environment_adapte[i][4], environment_adapte[i][5],"g:o")
     i=i+1
 
 
