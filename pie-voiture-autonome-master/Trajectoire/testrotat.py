@@ -44,8 +44,8 @@ def init():
 
 #fonction qui permet de modifier la position 
 def animate(i):
-    patch.set_width(1.5)
-    patch.set_height(1.0)
+    patch.set_width(0.5)
+    patch.set_height(0.8)
     patch.set_xy([x[i], y[i]]) #modification position
     patch.angle = yaw[i]        #modification angle
     return patch,

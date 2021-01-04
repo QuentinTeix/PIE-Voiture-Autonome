@@ -6,7 +6,7 @@ def params():
     Cette fonction permet d'initialiser les differents parametres de la modelisation 
     """
     
-    positioninit=[4,-1]
+    positioninit=[2,-1]
     orientationinit=0
     vinit=0
     deltat=1/24
