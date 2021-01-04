@@ -16,7 +16,7 @@ Il trace :
 
 
 environment --> MMMR [(thetai,ri,xi,yi,xpi,ypi)]
-environment_adapte --> MMMRC  [(thetai,ri,xi,yi,xpi xpiprim,ypiprim)]
+environment_adapte --> MMMRC  [(thetai,ri,xi,yi,xpi ou xpiprim,ypi ou ypiprim)]
 """
 
 #on sait pas a quoi ca sert
