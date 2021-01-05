@@ -134,16 +134,56 @@ for k in range(8) :
             thetap=pi+atan(ylp/xlp)
         thetacp=thetap+orientation*2*pi/360
 
-        #calcul distance entre lidar et poit zone safe ref absolu 
+        #calcul distance entre lidar et point zone safe ref absolu 
         rp=sqrt(xlp**2+ylp**2)
         xlpc=rp*cos(thetacp)+x
         ylpc=rp*sin(thetacp)+y
 
         #y a plus qu'a afficher !         
         plt.plot(xlc, ylc,"b:o")
-        plt.plot(xlpc,ylpc,"r:o")       
+        plt.plot(xlpc,ylpc,"r:o")    
         i+=1
+
+    #recherche de la cible
+    if (trouvecible(MMMR) == "ERREUR") :
+        continue
     
+    cible_value = trouvecible(MMMR)
+    xl=cible_value[2] 
+    yl=cible_value[3]
+
+    #calcul angle du point mesuré a partir increment 
+    theta=cible_value[0]  
+    thetac=(theta*alphainc+orientation)*2*pi/360  #angle de coord polaires dans le ref absolu
+    
+    #distance du point BORDURE au lidar 
+    r=cible_value[1]
+
+    #coordonné du point BORDURE dans le referentiel absolu 
+    xlc=r*cos(thetac)+x #rcos(thetac) =abscisse dans le ref du lidar rotationné de orientation xlc=abscisse dans le ref absolu
+    ylc=r*sin(thetac)+y
+
+    #coordonné du point dans le referentiel lidar ZONE SAFE
+    xlp=cible_value[4] 
+    ylp=cible_value[5]
+
+    #calcul angle du point mesuré ZONE SAFE  
+    if (xlp != 0) :
+        thetap=atan((ylp)/(xlp))
+    if xlp<0:
+        thetap=pi+atan(ylp/xlp)
+    thetacp=thetap+orientation*2*pi/360
+
+    #calcul distance entre lidar et point zone safe ref absolu 
+    rp=sqrt(xlp**2+ylp**2)
+    xlpc=rp*cos(thetacp)+x
+    ylpc=rp*sin(thetacp)+y
+
+    #y a plus qu'a afficher !         
+     
+    plt.plot(xlpc,ylpc,"k:o")
+    plt.plot([xlc, x],[ylpc, y])    
+
     plt.pause(dt)
     t = t + dt 
 

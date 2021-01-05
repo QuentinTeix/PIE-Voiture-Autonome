@@ -29,7 +29,7 @@ def trouvecible (environment_adapte):
     
     
     
-    #partie avec segment on calcul segment entre point mesure lidar et on verifie qu'on ne les coupe pas (mais ca sert a rien ? )
+    #partie avec segment on calcul segment entre point mesure lidar et on verifie qu'on ne les coupe pas 
     segments=[]
     i=0
     while i<(NNN-1):
@@ -46,7 +46,7 @@ def trouvecible (environment_adapte):
         while j<len(segments) and intersection((xpi,ypi),segments[j])!=1:
             j+=1
         if j==len(segments): #alors le pt pi trouvé une cible qui ne coupe aucun segment"
-            return([xpi,ypi])
+            return(environment_adapte_2[i])
         i+=1
     #-------------------------------------------------------------------------------------------------------------------
     print('ERREUR pas de cible optimale')
