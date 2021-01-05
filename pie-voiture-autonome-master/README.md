@@ -3,7 +3,12 @@
 
 ## Ce que fait le code (globalement)
 
-(à compléter...)
+Methode de direction de la voiture : 
+	1- On prend les mesures du LIDAR
+	2- on determine la zone safe 
+	3- On adapte la zone safe a la vitesse relative 
+	4- on trouve la cible 
+	5- on en deduit le rayon de braquage des roues 
 
 
 ## Méthodologie de trajectoire
@@ -58,3 +63,12 @@ vsimulationavecvuelidar_new.py afin d'avoir une modelisation dynamique
 - vsimulationavecvuelidar_new.py
 
 Module qui permet de visualiser l'avancement de la voiture dans l'environement Pour l'instant les positions succesives ont ete rentrées a la main mais l'objectif a terme est de les faires calculer directement a l'lalgorithme afin de verifier que la simulation marche 
+
+
+- actualise.py et actualise2.py
+
+Deux version d'une fonction qui mettent à jour la position, l'orientation et la vitesse du mobile.
+
+- environment.py et paramètres.py
+
+Deux module qui définissent les paramètres de modélisation utilisés dans les différentes fonction et le décors virtuel de la course (pour la simulation on utilise un circuit intérieur et extérieur (pour faire des murs) et des objets 'obstacles')
