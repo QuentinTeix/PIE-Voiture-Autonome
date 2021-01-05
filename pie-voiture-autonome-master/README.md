@@ -29,6 +29,7 @@ Il faut qu'on se mette d'accords sur la méthode générale de conduite de la vo
 
 Description du code :
 
+
 - trajectoire.py
 
 module final qui calcul la trajectoire 
@@ -49,4 +50,11 @@ module qui calcul la zone safe dans laquelle il ne faut pas aller
 Modelisation de la voiture a l'aide d'un patch 
 a ete repris dans la modelisation dynamique de la voiture 
 
-- 
+- vsimulationavecvuelidar.py
+
+Module de modelisation de la trajectoire mais marche pas j'ai recodé ce module dans 
+vsimulationavecvuelidar_new.py afin d'avoir une modelisation dynamique 
+
+- vsimulationavecvuelidar_new.py
+
+Module qui permet de visualiser l'avancement de la voiture dans l'environement Pour l'instant les positions succesives ont ete rentrées a la main mais l'objectif a terme est de les faires calculer directement a l'lalgorithme afin de verifier que la simulation marche 
