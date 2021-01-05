@@ -3,12 +3,12 @@
 
 ## Ce que fait le code (globalement)
 
-Methode de direction de la voiture : 
-	1- On prend les mesures du LIDAR
-	2- on determine la zone safe 
-	3- On adapte la zone safe a la vitesse relative 
-	4- on trouve la cible 
-	5- on en deduit le rayon de braquage des roues 
+Methode de direction de la voiture :
+- 1. On prend les mesures du LIDAR
+- 2. On determine la zone safe 
+- 3. On adapte la zone safe a la vitesse relative 
+- 4. On trouve la cible 
+- 5. On en deduit le rayon de braquage des roues 
 
 
 ## Méthodologie de trajectoire
