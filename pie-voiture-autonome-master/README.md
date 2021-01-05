@@ -3,7 +3,7 @@
 
 ## Ce que fait le code (globalement)
 
-
+(à compléter...)
 
 
 ## Méthodologie de trajectoire
