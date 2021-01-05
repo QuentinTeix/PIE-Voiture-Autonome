@@ -1,26 +1,26 @@
-# PIE Voiture autonome
+# Code du PIE Voiture autonome
 
-Projet de PIE qui vise à concevoir et construire une voiture autonome pour participer à une course.
 
-## Programmes
+## Ce que fait le code (globalement)
 
-## Wiki
 
-Tous les documents se trouvent dans le Wiki de GitLab.
 
-### Compte-rendus
 
-Dossier qui contient tout les compte-rendus des réunions/séances par ordre chronologique. Chacun est nommé avec la date de la réunion à l'envers.
-(contacter severine.bournaud@cea.fr et envoyer slides de compte-rendu)
+## Méthodologie de trajectoire
 
-### Documentation
+Il faut qu'on se mette d'accords sur la méthode générale de conduite de la voiture
 
-Dossier qui contient la documentation des différents composants (capteurs, moteurs, châssis...)
+- Est-ce que l'on garde la méthode de l'année dernière, ou est-ce que l'on en prend une autre ?
+(https://tel.archives-ouvertes.fr/tel-01160233/document)
 
-### FAST
 
-Diagramme de décomposition des relations logiques entre les différentes fonctions et comment les réaliser.
+- Cartographie de la piste pendant les 2 tours d'essais ? Pour ne se concentrer que sur les adversaires pendants la courses
+- Calcul de trajectoire courbe directement ? Cela prend les adversaires en compte ?
 
-### WBS
 
-Organigramme des taches du projet : décomposition du travail
+
+## Ce qu'il reste à faire:
+
+- Faire un rapport sur ce qui a été compris du code
+- Terminer de commenter et de comprendre les fonctions du code de l'année dernière.
+- Coder les fonctions manquantes selon la méthode suivie.
