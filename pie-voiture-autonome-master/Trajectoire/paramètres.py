@@ -1,12 +1,11 @@
 #paramètres:
 from math import *
 
+"""
+    Fonction initialisant les differents parametres de la modelisation 
+"""
 def params():
-    """
-    Cette fonction permet d'initialiser les differents parametres de la modelisation 
-    """
-    
-    positioninit=[2,-1]
+    positioninit=[4,-1]
     orientationinit=0
     vinit=0
     deltat=1/24

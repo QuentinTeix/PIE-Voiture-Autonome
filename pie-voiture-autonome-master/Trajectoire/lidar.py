@@ -1,7 +1,8 @@
 from intersection2 import *
 
-
-
+"""
+Renvoie un tableau M des angles et distances r0 des points d'intersections les plus proches par rapport au LIDAR 
+"""
 def lidar(environment,position,orientation,N):
     n=len(environment)
     M=[]
