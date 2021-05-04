@@ -1,3 +1,6 @@
+'''
+Fonctions de tests traitées ici, à ne pas prendre en compte un fois la version finale trouvées.
+'''
 import numpy as np
 import copy
 from zonesafe import *

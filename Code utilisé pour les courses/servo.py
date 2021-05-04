@@ -1,3 +1,6 @@
+'''
+Programme de test individuels du servo-moteur
+'''
 import RPi.GPIO as GPIO
 import time
 
