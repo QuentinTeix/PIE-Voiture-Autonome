@@ -119,7 +119,7 @@ try:
 
             mapt = traitement(map)      # Lissage du bruit, voir "traitement.py"
 
-        ###########  ##########
+        ########### 2. Choix de comportement de la voiture ##########
             if key == 103:        # Touche appuyée = 'g' --> faire partir la voiture
                 go = 1
             if key == 115:        # Touche appuyée = 's' --> faire arrêter la voiture
